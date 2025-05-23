@@ -1,5 +1,9 @@
 import { View, Text, Button, ScrollView } from "react-native";
 import MyButton from "./components/MyComponent";
+import Counter from "./components/Counter";
+import EventButton from "./components/EventButton";
+import EventInput from "./components/EventInput";
+import P_Button from "./components/PressableButton";
 
 const App = () => {
     return(
@@ -19,9 +23,17 @@ const App = () => {
         //     </ScrollView>
         // </View>
         <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' }}>
-            <MyButton />
+            {/* <MyButton title="button" /> */}
+            {/* 컴포넌트 태그 사이에 전달된 값은 자식 컴포넌트의 props에서 children으로 전달된다 */}
+            {/* <MyButton title="button">Children Props</MyButton>
+            <MyButton /> */}
+            {/* <Counter /> */}
+            {/* <EventButton /> */}
+            {/* <EventInput /> */}
+            <P_Button title="Pressable" />
         </View>
     )
+    
 }
 
 export default App;
