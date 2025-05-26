@@ -27,7 +27,7 @@ const StyledInput = styled.TextInput.attrs(({ theme }) => ({
 const Input = ({ placeholder, value, onChangeText, onSubmitEditing, onBlur }) => {
     // 화면에 너비 구하기
     // const width = Dimensions.get('window').width;
-    const { width } = useWindowDimensions().width;
+    const { width } = useWindowDimensions();
     return(
         // TextInput 컴포넌트는 기본 값으로 첫 글자가 대문자로 나타나고 오타 입력 시 자동으로 수정하는 기능이 켜져있다
         <StyledInput 

@@ -2,8 +2,9 @@ import styled, { ThemeProvider } from "styled-components";
 import { theme } from "./theme";
 import { StatusBar, useWindowDimensions } from "react-native";
 import Input from "./components/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Task from "./components/Task";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Container = styled.SafeAreaView`
     flex: 1;
@@ -28,14 +29,28 @@ const List = styled.ScrollView`
 export default App = () => {
     // 새 할일이 담길 state
     const [newTask, setNewTask] = useState('');
+    const [tasks, setTasks] = useState({})
 
-    const [tasks, setTasks] = useState({
-        '1':{id:'1',text:'Hanbit',completed:false},
-        '2':{id:'2',text:'React Native',completed:true},
-        '3':{id:'3',text:'Study',completed:false},
-        '4':{id:'4',text:'Game',completed:false},
-    })
+    const _saveTasks = async tasks => {
+        try {
+            await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+            setTasks(tasks);
+        } catch (error) {
+            
+        }
+    }
 
+    const _loadTasks = async () => {
+        const loadTasks = await AsyncStorage.getItem('tasks');
+        console.log('Loaded Tasks from AsyncStroage', loadTasks);
+        setTasks(JSON.parse(loadTasks || '{}'));
+    }
+
+    useEffect(() => {
+        _loadTasks();
+    }, [])
+
+    // Input 컴포넌트에 적히는 내용을 newTask상태에 저장하는 역할
     const _handleTextChange = (text) => {
         setNewTask(text);
     }
@@ -46,8 +61,9 @@ export default App = () => {
         // ID값은 Date.now().toString();으로 넣기
         const ID = Date.now().toString();
         const newTaskObject = { [ID]: { id: ID, text: newTask, completed: false }, };
-        setTasks({ ...tasks, ...newTaskObject });
         setNewTask('');
+        _saveTasks({ ...tasks, ...newTaskObject });
+        // setTasks({ ...tasks, ...newTaskObject });
     }
 
     // Object.assign(target, ...source)
@@ -56,20 +72,24 @@ export default App = () => {
     const _deleteTask = (id) => {
         const currentTasks = Object.assign({}, tasks);
         delete currentTasks[id];
-        setTasks(currentTasks);
+        _saveTasks(currentTasks);
+        // setTasks(currentTasks);
     }
 
     const _toggleTask = (id) => {
         const currentTasks = Object.assign({}, tasks);
         currentTasks[id]['completed'] = !currentTasks[id]['completed'];
-        setTasks(currentTasks);
+        _saveTasks(currentTasks);
+        // setTasks(currentTasks);
     }
 
+    // 수정하기 아이콘을 눌러 할 일 수정하기
     const _editTask = (item) => {
         // 현재 배열을 복사해서 가져오고 변경된 내용을 넣고 state에 반영하기
         const currentTasks = Object.assign({}, tasks);
         currentTasks[item.id] = item;
-        setTasks(currentTasks);
+        _saveTasks(currentTasks);
+        // setTasks(currentTasks);
     }
 
     const _onBlur = () => {
