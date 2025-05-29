@@ -7,13 +7,25 @@ export const useFetch = url => {
     // 오류 발생 시 에러 객체를 저장
     const [error, setError] = useState(null);
     const [inProgress, setInProgress] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     // useEffect의 첫번째 콜백 함수는 비동기함수로 선언이 불가능하다
     // 그래서 내부에 비동기 함수를 별도로 정의한 뒤 호출한다
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setProgress(0);
                 setInProgress(true);
+
+                let currentProgress = 0;
+                const interval = setInterval(() => {
+                    currentProgress += 5;
+                    if (currentProgress >= 90) {
+                    clearInterval(interval);
+                } else {
+                    setProgress(currentProgress);
+                }
+                }, 100);
 
                 // fetchAPI로 데이터를 요청
                 const res = await fetch(url);
@@ -36,7 +48,7 @@ export const useFetch = url => {
         }
         
         fetchData();
-    }, []);
+    }, [url]);
 
-    return { data, error, inProgress }
+    return { data, error, inProgress, progress }
 }

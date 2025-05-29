@@ -19,13 +19,13 @@ const LoadingMessage = styled.Text`
     color: #2ecc71;
 `
 const Dog = () => {
-    const { data, error, inProgress } = useFetch(URL);
+    const { data, error, inProgress, progress } = useFetch(URL);
 
     
     return(
         <>
             {/* 요청 중일 때 현재 요청이 진행중입니다. 문자열 출력하기 */}
-            { inProgress && <LoadingMessage>현재 요청이 진행중입니다.</LoadingMessage> }
+            { inProgress && <LoadingMessage>현재 요청이 진행중입니다.{ progress }%</LoadingMessage> }
             <StyledImage source={ data?.message ? { uri : data.message } : null } />
             <ErrorMessage>{ error?.message }</ErrorMessage>
         </>

@@ -9,7 +9,7 @@ const AverageCalculator = () => {
     // 평균을 계산하는 로직(useMemo로 메모이제이션)
     const average = useMemo(() => {
         console.log("Calculating average");
-        const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+        const sum = numbers.reduce((acc, curr) => acc + curr, 0);   // acc : 누적 값, curr : 현재 값
         return sum / numbers.length;
     }, [numbers]);  // numbers에 변화가 생길 때마다 재실행이 된다
 
