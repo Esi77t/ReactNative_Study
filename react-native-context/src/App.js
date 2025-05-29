@@ -5,6 +5,8 @@ import ThemeComponent from "./components/ThemeComponent";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { UserProvider } from "./contexts/UserContext";
 import UserComponent from "./components/UserComponet";
+import { CartProvider } from "./contexts/CartContext";
+import CartScreen from "./components/CartScreen";
 
 const Container = styled.View`
     flex: 1;
@@ -22,11 +24,11 @@ const App = () => {
         //         <Input />
         //     </Container>
         // </UserProvider>
-        <UserProvider>
+        <CartProvider>
             <Container>
-                <UserComponent />
+                <CartScreen />
             </Container>
-        </UserProvider>
+        </CartProvider>
     )
 }
 

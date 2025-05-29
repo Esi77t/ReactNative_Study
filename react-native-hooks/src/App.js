@@ -8,8 +8,9 @@ import ScrollEnd from "./components/ScrollEnd";
 import Length from "./components/Length";
 import AverageCalculator from "./components/Average";
 import Dog from "./components/Dog";
-import Signup from "./components/SignUp";
 import ChangeTheme from "./components/ChangeTheme";
+import Counter2 from "./components/Counter2";
+import LoginForm from "./components/LoginForm";
 
 const Container = styled.View`
     flex: 1;
@@ -29,7 +30,7 @@ const App = () => {
             {/* <Button title={ showHide ? 'Hide' : 'Show' } onPress={ () => setShowHide(prev => !prev) } />
             { showHide && <Form /> }
             <ScrollEnd /> */}
-            <ChangeTheme />
+            <LoginForm />
         </Container>
     ) 
 }

@@ -8,6 +8,7 @@ const UserComponent = () => {
 
     return(
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            {/* JS에서 false로 판단하는 것들 : false, '', null, undefined, 0, NaN */}
             { user ? (
                 <>
                     <Text>환영합니다! { user.name } 님!</Text>
