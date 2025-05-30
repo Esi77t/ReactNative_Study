@@ -18,8 +18,6 @@ const items = [
     { _id: 3, name: 'Hanbit' },
 ]
 
-
-
 const List = ({ navigation }) => {
     
     return(

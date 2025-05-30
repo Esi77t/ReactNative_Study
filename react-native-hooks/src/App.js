@@ -11,6 +11,7 @@ import Dog from "./components/Dog";
 import ChangeTheme from "./components/ChangeTheme";
 import Counter2 from "./components/Counter2";
 import LoginForm from "./components/LoginForm";
+import Signup from "./components/Signup";
 
 const Container = styled.View`
     flex: 1;

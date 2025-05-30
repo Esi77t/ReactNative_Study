@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import styled from "styled-components"
 import StackNavigtion from "./navigation/Stack";
+import TabNavigator from "./navigation/Tab";
 
 const Container = styled.View`
     flex: 1;
@@ -12,8 +13,11 @@ const Container = styled.View`
 const App = () => {
     return(
         // NavigationContainer : 해당 컴포넌트로 둘러싼 컴포넌트에 내비게이션 기능을 적용해주는 컴포넌트
+        // <NavigationContainer>
+        //     <StackNavigtion />
+        // </NavigationContainer>
         <NavigationContainer>
-            <StackNavigtion />
+            <TabNavigator />
         </NavigationContainer>
     )
 }

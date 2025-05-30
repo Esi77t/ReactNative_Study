@@ -3,10 +3,10 @@ import User from "./components/User";
 import Input from "./components/Input";
 import ThemeComponent from "./components/ThemeComponent";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { UserProvider } from "./contexts/UserContext";
 import UserComponent from "./components/UserComponet";
 import { CartProvider } from "./contexts/CartContext";
 import CartScreen from "./components/CartScreen";
+import { UserProvider } from "./contexts/UserContext";
 
 const Container = styled.View`
     flex: 1;
@@ -24,11 +24,11 @@ const App = () => {
         //         <Input />
         //     </Container>
         // </UserProvider>
-        <CartProvider>
+        <UserProvider>
             <Container>
-                <CartScreen />
+                <UserComponent />
             </Container>
-        </CartProvider>
+        </UserProvider>
     )
 }
 
