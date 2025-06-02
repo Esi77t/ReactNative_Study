@@ -9,10 +9,9 @@ import * as Font from "expo-font";
 // expo-splash-screen : 앱 실행시 스플래시 화면을 제어하는 라이브러리
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
-import Login from "./screens/Login";
+import Navigation from "./navigations";
+import { images } from "./utils/images";
 
-// 앱 시작 시 스플래시 화면이 자동으로 사라지지 않도록 설정
-// 이 함수 호출 이후로는 내가 직접 hideAsync()를 호출할 때까지 스플래시 화면이 유지된다
 SplashScreen.preventAutoHideAsync();
 
 // 이미지 캐싱 함수
@@ -43,6 +42,7 @@ const App = () => {
         // useEffect에서 비동기 함수를 호출하여 리소스를 로드
         const prepareResources = async() => {
             try {
+                
                 await _loadAssets();
             } catch (error) {
                 console.warn(error);
@@ -58,21 +58,26 @@ const App = () => {
         // 이미지와 폰트를 캐싱하여 리소스를 로드
         // require()
         // 로컬 파일 리소스(이미지, 동영상, 사운드 파일 등)를 가져오는데 사용된다
-        const imageAssets = cacheImages([require('../assets/splash.png')]);
+        const imageAssets = cacheImages([require('../assets/splash.png'), ...Object.values(images),]);
         const fontAssets = cacheFonts([]);
 
         await Promise.all([...imageAssets, ...fontAssets])
     }
 
     if(!isReady) {
-        return null;    // 로딩이 완료되지 않은 경우 화면을 빈 상태로 유지
+        return (
+            <Image
+            source={require('../assets/splash.png')}
+            style={{ flex: 1, resizeMode: 'contain', width: '100%', height: '100%' }}
+            />
+        );
     }
 
     return(
         // 스타일드 컴포넌트의 ThemeProvider 컴포넌트를 사용해 스타일드 컴포넌트에서 정의된 theme를 사용할 수 있게 되었다
         <ThemeProvider theme={ theme }>
             <StatusBar barStyle='dark-content' />
-            <Login />
+            <Navigation />
         </ThemeProvider>
     )
 }
