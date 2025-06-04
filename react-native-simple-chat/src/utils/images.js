@@ -5,4 +5,5 @@ const preFix = '';
 // 가능해야 한다
 export const images = {
     // logo: `${preFix}/logo.png?alt=media`
+    // photo : `${prefix}/photo.png?alt=media`,
 }

@@ -5,18 +5,21 @@ const Container = styled.View`
     margin-bottom: 30px;
 `;
 
-const StyledImage = styled.Image.attrs(({ imageStyle }) => ({
-    style: imageStyle,
-}))`
+const StyledImage = styled.Image`
     background-color: ${({ theme }) => theme.imageBackground };
     width: 100px;
     height: 100px;
+    borderRadius: ${({ rounded }) => (rounded ? 50 : 0)}px;
 `;
 
-const Image = ({ imageStyle }) => {
+const Image = ({ url, imageStyle, rounded }) => {
     return(
         <Container>
-            <StyledImage source={{ uri: 'https://i.namu.wiki/i/VOXnTntHPJ41TX7xh__s-dnZHNhO1JYYQ2KhJLBRjmXE5e2kYXCObkw9E6XeSFvc7w-3mE1z6BLido2HtIFo_Q.webp' }} style={ imageStyle } />
+            <StyledImage 
+                source={{ uri: url }}
+                style={ imageStyle } 
+                rounded={ rounded }
+            />
         </Container>
     )
 }
