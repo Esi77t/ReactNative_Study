@@ -4,6 +4,8 @@ import { images } from "../utils/images";
 import { useState, useRef, useEffect } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { removeWhiteSpace, validateEmail } from "../utils/common";
+import { login } from "../utils/firebase";
+import { Alert } from "react-native";
 
 const Container = styled.View`
     flex: 1;
@@ -56,8 +58,14 @@ const Login = ({ navigation }) => {
         setPassword(removeWhiteSpace(password));
     }
 
-    const _handleLoginButtonPress = () => {
-
+    // 이메일과 비밀번호를 입력하고 로그인 버튼을 눌렀을 때 팝업창 띄우기
+    const _handleLoginButtonPress = async () => {
+        try {
+            const user = await login({ email, password });
+            Alert.alert('Login Success', user.email);
+        } catch (error) {
+            Alert.alert('Login Error', error.message);
+        }
     }
 
     return(

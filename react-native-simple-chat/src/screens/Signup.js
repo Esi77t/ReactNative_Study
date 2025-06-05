@@ -4,6 +4,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { validateEmail, removeWhiteSpace } from '../utils/common'
 import { useRef, useState, useEffect } from "react";
 import { images } from "../utils/images";
+import { signup } from "../utils/firebase";
+import { Alert } from "react-native";
 
 const Container = styled.View`
     flex: 1;
@@ -60,8 +62,13 @@ const Signup = () => {
         setIsDisabled(!(name && email && password && passwordConfirm && !errorMessage))
     }, [name, email, password, passwordConfirm, errorMessage]);
 
-    const _handleSignupButtonPress = () => {
-
+    const _handleSignupButtonPress = async () => {
+        try {
+            const user = await signup({ email, password, name, photoURL });
+            Alert.alert('Sign Up Success', user.email);
+        } catch (error) {
+            Alert.alert('Sign Up Error', error.message);
+        }
     }
 
     return(
@@ -70,13 +77,18 @@ const Signup = () => {
             extraScrollHeight={ 120 }
         >
             <Container>
-                <Image rounded url={ photoURL }/>
+                <Image 
+                    rounded 
+                    url={ photoURL }
+                    showButton
+                    onChangeImage={ url => setPhotoURL(url)}
+                />
                 <Input
                     label="name"
                     value={ name }
                     onChangeText={ text => setName(text)}
                     onSubmitEditing={() => {
-                        setName(name.trim());
+                        setName(name.trim());+
                         emailRef.current.focus();
                     }}
                     onBlur={() => setName(name.trim())}
