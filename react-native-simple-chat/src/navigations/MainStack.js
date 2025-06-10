@@ -11,7 +11,7 @@ const MainStack = () => {
     // Channel
     // 두 개의 컴포넌트를 Screen으로 갖는 StackNavigation 만들기
     const theme = useContext(ThemeContext);
-
+    
     return(
         <Stack.Navigator
             screenOptions={{

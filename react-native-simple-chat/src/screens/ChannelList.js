@@ -1,9 +1,12 @@
-import { Button, Text } from "react-native"
+import { Text } from "react-native"
 import styled from "styled-components";
+import { Button } from "../components";
 
 const Container = styled.View`
     flex: 1;
     background: ${({ theme }) => theme.background };
+    justify-content: center;
+    align-items: center;
 `
 
 const ChannelList = ({ navigation }) => {
