@@ -53,10 +53,9 @@ export const signup = async({ email, password, name, photoURL }) => {
 
 // 
 const uploadImage = async uri => {
-    if(uri.startWith('https')) {
+    if(uri.startsWith('https')) {
         return uri;
     }
-
     // 로컬파일을 fetch해서 blob데이터로 변환
     const response = await fetch(uri);
     // blob() : binaryLargeObject의 약자
@@ -74,4 +73,8 @@ const uploadImage = async uri => {
     })
 
     return await getDownloadURL(storageRef);
+}
+
+export const logout = async () => {
+    return await auth.signOut();
 }

@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { Image, Input, Button } from '../components';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { validateEmail, removeWhiteSpace } from '../utils/common'
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { images } from "../utils/images";
 import { signup } from "../utils/firebase";
 import { Alert } from "react-native";
+import { ProgressContext, UserContext } from "../contexts";
 
 const Container = styled.View`
     flex: 1;
@@ -26,6 +27,8 @@ const ErrorText = styled.Text`
 
 const Signup = () => {
 
+    const { dispatch } = useContext(UserContext);
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -39,6 +42,8 @@ const Signup = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
+
+    const { spinner } = useContext(ProgressContext);
 
     useEffect(() => {
         let _errorMessage = "";
@@ -64,10 +69,15 @@ const Signup = () => {
 
     const _handleSignupButtonPress = async () => {
         try {
+            spinner.start();
             const user = await signup({ email, password, name, photoURL });
+            dispatch(user);
+            console.log(user);
             Alert.alert('Sign Up Success', user.email);
         } catch (error) {
             Alert.alert('Sign Up Error', error.message);
+        } finally {
+            spinner.stop();
         }
     }
 
@@ -78,7 +88,7 @@ const Signup = () => {
         >
             <Container>
                 <Image 
-                    rounded 
+                    rounded
                     url={ photoURL }
                     showButton
                     onChangeImage={ url => setPhotoURL(url)}

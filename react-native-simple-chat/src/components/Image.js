@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { MaterialIcons } from "@expo/vector-icons";
-import Button from "./Button";
-import { Platform, Alert } from "react-native";
+import { Platform } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect } from "react";
 

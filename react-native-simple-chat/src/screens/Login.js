@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { Image, Input, Button } from "../components/index";
 import { images } from "../utils/images";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { removeWhiteSpace, validateEmail } from "../utils/common";
 import { login } from "../utils/firebase";
 import { Alert } from "react-native";
+import { ProgressContext, UserContext } from "../contexts";
 
 const Container = styled.View`
     flex: 1;
@@ -24,6 +25,9 @@ const ErrorText = styled.Text`
 `
 
 const Login = ({ navigation }) => {
+
+    const { spinner } = useContext(ProgressContext);
+    const { dispatch } = useContext(UserContext);
 
     // 이메일 상태 관리
     const [email, setEmail] = useState('');
@@ -61,10 +65,14 @@ const Login = ({ navigation }) => {
     // 이메일과 비밀번호를 입력하고 로그인 버튼을 눌렀을 때 팝업창 띄우기
     const _handleLoginButtonPress = async () => {
         try {
+            spinner.start();
             const user = await login({ email, password });
+            dispatch(user);
             Alert.alert('Login Success', user.email);
         } catch (error) {
             Alert.alert('Login Error', error.message);
+        } finally {
+            spinner.stop();
         }
     }
 
@@ -77,7 +85,7 @@ const Login = ({ navigation }) => {
             <Container>
                 <Image url={ images.logo } imageStyle={{ borderRadius: 40 }} />
                 <Input
-                    label="Email"
+                    label="email"
                     value={ email }
                     onChangeText={ _handleEmailChange }
                     onSubmitEditing={() => passwordRef.current.focus()}
@@ -85,7 +93,7 @@ const Login = ({ navigation }) => {
                     returnKeyType="next"
                 />
                 <Input
-                    label="Password"
+                    label="password"
                     value={ password }
                     onChangeText={ _handlePasswordChange }
                     ref={ passwordRef }

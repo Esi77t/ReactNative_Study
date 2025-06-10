@@ -11,6 +11,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import Navigation from "./navigations";
 import { images } from "./utils/images";
+import { ProgressProvider, UserProvider } from "./contexts";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -76,8 +77,12 @@ const App = () => {
     return(
         // 스타일드 컴포넌트의 ThemeProvider 컴포넌트를 사용해 스타일드 컴포넌트에서 정의된 theme를 사용할 수 있게 되었다
         <ThemeProvider theme={ theme }>
-            <StatusBar barStyle='dark-content' />
-            <Navigation />
+            <UserProvider>
+                <ProgressProvider>
+                    <StatusBar barStyle='dark-content' />
+                    <Navigation />
+                </ProgressProvider>
+            </UserProvider>
         </ThemeProvider>
     )
 }
