@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, up
 // uploadBytes : Storage에 파일을 업로드 해주는 함수
 // getDownloadURL : Storage에 업로드 된 파일의 다운로드 URL을 가져온다
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, getFirestore, doc, setDoc } from "firebase/firestore";
+import { collection, getFirestore, doc, setDoc, serverTimestamp, addDoc } from "firebase/firestore";
 import config from "../../firebase.json";
 
 // initializeApp()
@@ -121,6 +121,7 @@ export const updateUserPhoto = async photoUrl => {
 
 export const createChannel = async ({ title, description }) => {
     // 1. 'channels' 컬렉션 참조하기
+    // firestore에 없는 컬렉션을 참조해서 가져오려고 해도 에러는 발생하지 않는다
     const channelCollection = collection(db, 'channels');
 
     // 2. 새 문서에 대한 참조 생성
@@ -140,6 +141,23 @@ export const createChannel = async ({ title, description }) => {
     // 5. setDoc로 해당 문서 경로에 데이터 쓰기
     await setDoc(newChannelRef, newChannel);
 
+    // 맨 처음 컬렉션은 없지만 문서를 저장하면서 자동으로 컬렉션을 만든다
+
     // 6. 생성된 채널 ID를 반환
     return id;
+}
+
+export const createMessage = async ({ channelId, text }) => {
+    console.log('Sending message to channel : ', channelId, text);
+
+    try {
+        const collectionRef = collection(db, `channels/${ channelId }/messages`);
+        await addDoc(collectionRef, {
+            text,
+            createAt: serverTimestamp(),
+        });
+        console.log('Message added successfully!');
+    } catch (error) {
+        console.log('Message add Fail: ', error.message);
+    }
 }

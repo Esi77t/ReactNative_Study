@@ -33,6 +33,8 @@ export const theme = {
     buttonUnFilledTitle: colors.blue,
     headerTintColor: colors.black,
     buttonLogout: colors.red,
+    sendButtonActive: colors.blue,
+    sendButtonInactive: colors.grey_1,
 
     // Spinner 관련
     spinnerBackground: colors.black,
@@ -41,4 +43,12 @@ export const theme = {
     // Tab 관련
     tabActiveColor: colors.blue,
     tabInactiveColor: colors.grey_1,
+
+    // list 관련
+    listBorder: colors.grey_0,
+    listTime: colors.grey_1,
+    listDescription: colors.grey_1,
+    listIcon: colors.black,
+    
+
 }
