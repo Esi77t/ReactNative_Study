@@ -1,30 +1,31 @@
-import styled from "styled-components"
-
-const Container = styled.Pressable`
-    position: absolute;
-    right: 20px;
-    bottom: 30px;
-    width: 60px;
-    height: 60px;
-    background-color: ${({ theme }) => theme.buttonBackground };
-    align-items: center;
-    justify-contet: center;
-    border-radius: 30px;
-    width: 20%;
-    padding: 10px;
-`;
-
-const Title = styled.Text`
-    color: ${({ theme }) => theme.buttonTitle };
-    font-size: 24px;
-`;
+import { Pressable, StyleSheet, Text } from "react-native";
 
 const FloatingButton = ({ onPress }) => {
     return(
-        <Container onPress={ onPress } >
-            <Title>+</Title>
-        </Container>
+        <Pressable onPress={ onPress } style={ styles.button }>
+            <Text style={ styles.plus }>+</Text>
+        </Pressable>
     );
 }
+
+const styles = StyleSheet.create({
+    button: {
+        position: 'absolute',
+        right: 30,
+        bottom: 120,
+        backgroundColor: '#2ecc71',
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    plus: {
+        color: 'white',
+        fontSize: 30,
+        lineHeight: 34,
+    }
+})
 
 export default FloatingButton;

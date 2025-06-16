@@ -1,14 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { ThemeProvider } from "styled-components";
 import StackNavigation from "./navigations/StackNavigation";
-import theme from "./theme";
+import { StatusBar } from "react-native";
 
 const App = () => {
-    <ThemeProvider theme={ theme }>
+    return(
         <NavigationContainer>
+            <StatusBar barStyle="light-content" />
             <StackNavigation />
         </NavigationContainer>
-    </ThemeProvider>
+    )
 }
 
 export default App;
